@@ -1,0 +1,14 @@
+.container{
+	border-radius: 15px 50px 30px;
+    background: #8AC007;
+    padding: 20px; 
+	
+}
+body{
+	background-color:blue;
+}
+#inner{
+	position: relative;
+	top: 50%;
+	transform: translateY(50%);
+}

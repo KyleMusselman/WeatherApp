@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>WeatherKAM</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/styles.css">
+ 
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+</head>
+<body>
+
+	
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div id="inner" class="container">
+    <div class="row">
+      <div>
+        <h3>WeatherKAM</h3>
+        <!-- .container is main centered wrapper -->
+		<div class="container">
+		  <!-- just use a number and class 'column' or 'columns' -->
+		  
+			  Zip Code:<br>
+			  <input type="text" name="zipCode" value="Doesn't Work Yet">
+			  <button id="button">Submit</button>
+			
+		  <!-- there are a few shorthand columns widths as well -->
+		  <h5 id="name">City Name</h5>
+		  <div class="row">
+			<div class="one-half column"></div>
+			<img src="http://openweathermap.org/img/w/10d.png" id="weather" class="data">
+		  </div>
+		  <div class="row">
+			<div class="one-third column"></div>
+			<div id="temp" class="one-third column">CurrentTemperature</div>
+			<div class="one-third column"></div>
+		  </div>
+		  <div class="row">
+			<div class="one-third column"></div>
+			<div id="description" class="one-third column">WeatherDescription</div>
+			<div class="one-third column"></div>
+		  </div>
+		  <div class="row">
+			<div id="sunrise" class="one-half column">Sunrise Time</div>
+			<div id="sunset" class="one-half column">Sunset Time</div>
+			<script>
+				//Links http://openweathermap.org/current | http://getskeleton.com/#intro
+				document.getElementById("button").onclick = function() {
+					var request = new XMLHttpRequest();
+					//1 Needs responsive location setting
+					request.open("GET","http://api.openweathermap.org/data/2.5/weather?zip=16673,us&appid=bd82977b86bf27fb59a04b61b657fb6f&units=imperial", true);
+					//1 \
+					
+					request.onload = function() {
+						var responseJSONData = JSON.parse(request.responseText);
+						document.getElementById("name").innerHTML = responseJSONData.name;
+						document.getElementById("weather").src = "http://openweathermap.org/img/w/" + responseJSONData.weather[0].icon + ".png";
+						
+						document.getElementById("temp").innerHTML = responseJSONData.main.temp;
+						document.getElementById("description").innerHTML = responseJSONData.weather[0].description;
+						//2 Convert Epoch to Human Readable? http://www.epochconverter.com/
+						document.getElementById("sunrise").innerHTML  = responseJSONData.sys.sunrise;
+						document.getElementById("sunset").innerHTML = responseJSONData.sys.sunset; 
+						//2 \
+					}
+					
+					request.onerror = function() {
+						console.log("Connection Error");
+					}
+					
+					request.send();
+				}
+			</script>
+		  </div>
+		</div>
+      </div>
+    </div>
+  </div>
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
